@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Temperature Koto</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url(images/bg-image.jpg) no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="col-md-6 m-auto py-5">
+            <div class="input-group mb-3">
+                <input id="city_name" type="text" class="form-control" placeholder="Enter a location for Weather ...">
+                <div class="input-group-append">
+                    <button id="search_btn" type="button" class="btn btn-danger">Search</button>
+                </div>
+            </div>
+        </form>
+        <div class="weather-status text-white text-center">
+            <img id="pic" src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
+            <h1 id="city">Dhaka</h1>
+            <h3><span id="temp">38.06</span>&deg;C</h3>
+            <h1 id="desc" class="lead">Clouds</h1>
+        </div>
+    </div>
+     <script>
+          const cityName = document.getElementById('city_name');
+          const city = document.getElementById('city');
+          const desc = document.getElementById('desc');
+          const temp = document.getElementById('temp');
+          const pic = document.getElementById('pic');
+       document.getElementById('search_btn').addEventListener('click', function () {
+           fetch('https://api.openweathermap.org/data/2.5/weather?q='+cityName.value+'&units=metric&appid=1f233db70df85a59a18781545892b795')
+           .then(res => res.json())
+           .then(data => {
+               city.innerText = data.name;
+               desc.innerText = data.weather[0].description;
+               temp.innerText = data.main.temp;
+               let icon = data.weather[0].icon;
+               pic.src = "https://openweathermap.org/img/wn/"+ icon +"@2x.png";
+           })
+       });
+     </script>
+</body>
+
+</html>
